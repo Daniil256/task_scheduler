@@ -1,0 +1,68 @@
+### Переменные
+@baseUrl = http://localhost:8080
+
+### 1. Создание задачи на перевод сотрудника (TRANSFER)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "taskType": "TRANSFER",
+  "scheduledTime": "2026-02-24T17:43:00",
+  "workerId": 1,
+  "targetGroupId": 3
+}
+
+### 2. Создание задачи на изменение статуса группы (GROUP_STATUS)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "taskType": "GROUP_STATUS",
+  "scheduledTime": "2026-02-24T17:49:00",
+  "groupId": 1,
+  "groupStatus": "INACTIVE"
+}
+
+### 3. Создание задачи на запись в лог (LOG)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "taskType": "LOG",
+  "scheduledTime": "2026-02-24T17:50:00",
+  "message": "Тестовая 4"
+}
+
+### 4. Попытка создать задачу с невалидными данными (отсутствует обязательное поле)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "taskType": "TRANSFER",
+  "scheduledTime": "2026-05-01T10:00:00"
+}
+
+### 5. Попытка создать задачу с прошедшей датой (если есть @Future)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "taskType": "LOG",
+  "scheduledTime": "2020-01-01T00:00:00",
+  "message": "Старое напоминание"
+}
+
+### 6. Получить список всех задач
+GET {{baseUrl}}/tasks
+
+### 7. Получить задачу по ID (замените 1 на реальный ID)
+GET {{baseUrl}}/tasks/124
+
+### 8. Попытка получить несуществующую задачу
+GET {{baseUrl}}/tasks/9999
+
+### 9. Отменить задачу (пометить как CANCELLED)
+DELETE {{baseUrl}}/tasks/124
+
+### 10. Попытка отменить несуществующую задачу
+DELETE {{baseUrl}}/tasks/9999
