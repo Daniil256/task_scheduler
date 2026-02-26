@@ -1,4 +1,4 @@
-package com.bank.task_scheduler.dto;
+package com.bank.task_scheduler.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

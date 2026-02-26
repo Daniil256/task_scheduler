@@ -1,12 +1,11 @@
 package com.bank.task_scheduler.handler;
 
-import com.bank.task_scheduler.dto.ErrorResponse;
+import com.bank.task_scheduler.dto.response.ErrorResponse;
+import com.bank.task_scheduler.exception.CancelTaskException;
 import com.bank.task_scheduler.exception.EntityNotFoundException;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,13 +21,24 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex) {
-        log.error("Entity not found: {}", ex.getMessage());
+        log.error("Entity with {} %s not found: {}", ex.getEntityId(), ex.getMessage());
         ErrorResponse error = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(ex.getMessage())
+                .message(String.format("Entity with id %s not found", ex.getEntityId()))
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CancelTaskException.class)
+    public ResponseEntity<ErrorResponse> cancelTaskException(CancelTaskException ex) {
+        log.error("The task {} has already been canceled: {}", ex.getTaskId(), ex.getMessage());
+        ErrorResponse error = ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(String.format("The task %s has already been canceled", ex.getTaskId()))
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,19 +68,6 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> illegalEnumValue(HttpMessageNotReadableException ex) {
-        LocalDateTime now = LocalDateTime.now();
-        if (ex.getCause() instanceof InvalidFormatException) {
-            return ResponseEntity.
-                    badRequest()
-                    .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid TaskType or GroupStatus", now));
-        }
-        return ResponseEntity
-                .badRequest()
-                .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Некорректный формат запроса", now));
     }
 
     @ExceptionHandler(Exception.class)

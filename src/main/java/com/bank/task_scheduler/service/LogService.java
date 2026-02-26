@@ -14,10 +14,6 @@ public class LogService {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     public void logNotification(@NonNull String message) {
-        String formattedMessage = String.format("[NOTIFICATION] %s: %s",
-                LocalDateTime.now().format(FORMATTER), message);
-        log.info(formattedMessage);
-
-        System.out.println(formattedMessage);
+        log.info("[NOTIFICATION] {}: {}", LocalDateTime.now().format(FORMATTER), message);
     }
 }
