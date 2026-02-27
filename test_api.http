@@ -11,9 +11,9 @@ Content-Type: application/json
 
 {
   "taskType": "TRANSFER",
-  "scheduledTime": "2026-02-26T17:03:00",
-  "workerId": 100,
-  "groupId": 5
+  "scheduledTime": "2026-02-27T13:04:00",
+  "workerId": 1,
+  "groupId": 3
 }
 
 ### 1.3 Создание задачи-напоминания (Notification/Log)
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
   "taskType": "LOG",
-  "scheduledTime": "2026-02-26T17:03:00",
+  "scheduledTime": "2026-02-27T12:12:00",
   "message": "Проверить отчётность за первый квартал"
 }
 
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 {
   "taskType": "GROUP_STATUS",
-  "scheduledTime": "2026-02-26T17:04:00",
+  "scheduledTime": "2026-02-27T12:12:00",
   "groupId": 4,
   "groupStatus": "INACTIVE"
 }
@@ -56,7 +56,7 @@ GET {{baseUrl}}
 Content-Type: application/json
 
 ### 3.1 Получить задачу с ID = 1 (замените на существующий ID)
-GET {{baseUrl}}/133
+GET {{baseUrl}}/1
 Content-Type: application/json
 
 ### 3.2 Получить несуществующую задачу (должна вернуться ошибка 404)
@@ -68,50 +68,9 @@ Content-Type: application/json
 ### ============================================
 
 ### 4.1 Отменить задачу с ID = 1 (только если статус PENDING)
-DELETE {{baseUrl}}/11
+DELETE {{baseUrl}}/1
 Content-Type: application/json
 
 ### 4.2 Попытка отменить несуществующую задачу
 DELETE {{baseUrl}}/999999
 Content-Type: application/json
-
-### ============================================
-### 6. ТЕСТЫ ДЛЯ РАЗЛИЧНЫХ ТИПОВ JSON (альтернативные форматы)
-### ============================================
-
-### 6.1 Worker Transfer с дополнительным описанием
-POST {{baseUrl}}
-Content-Type: application/json
-
-{
-  "taskType": "WORKER_TRANSFER",
-  "scheduledTime": "2026-06-01T14:30:00",
-  "workerId": 5,
-  "targetGroupId": 10
-}
-
-### 6.2 Group Status Change - активация группы
-POST {{baseUrl}}
-Content-Type: application/json
-
-{
-  "taskType": "GROUP_STATUS",
-  "scheduledTime": "2026-03-25T09:00:00",
-  "groupId": 7,
-  "newGroupStatus": "ACTIVE"
-}
-
-### 6.3 Notification - напоминание о встрече
-POST {{baseUrl}}
-Content-Type: application/json
-
-{
-  "taskType": "LOG",
-  "scheduledTime": "2026-03-30T11:00:00",
-  "description": "Напоминание о планерке",
-  "notificationMessage": "Еженедельная планерка с руководителями отделов"
-}
-
-
-###
-# message log

@@ -22,11 +22,11 @@ public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @With
-    private Long id;
+    private Long workerId;
 
     @Column(nullable = false)
     @NonNull
-    private String name;
+    private String workerName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)

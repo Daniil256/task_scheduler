@@ -19,6 +19,6 @@ public class GroupService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("Group not found", groupId));
 
-        group.setStatus(newStatus);
+        group.setGroupStatus(newStatus);
     }
 }

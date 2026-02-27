@@ -27,7 +27,7 @@ public class GroupStatusExecutor implements TaskExecutor {
     }
 
     @Override
-    public Task createTask(@NonNull TaskRequest request) {
+    public Task buildTask(@NonNull TaskRequest request) {
         GroupTaskRequest groupRequest = (GroupTaskRequest) request;
         return Task.builder()
                 .type(request.getTaskType())
@@ -41,7 +41,7 @@ public class GroupStatusExecutor implements TaskExecutor {
     @Override
     public TaskResponse toResponse(@NonNull Task task) {
         return GroupTaskResponse.builder()
-                .id(task.getId())
+                .id(task.getTaskId())
                 .groupId(task.getGroupId())
                 .groupStatus(task.getGroupStatus())
                 .taskType(task.getType())

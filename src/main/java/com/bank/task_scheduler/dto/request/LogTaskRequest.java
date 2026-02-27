@@ -16,5 +16,5 @@ import javax.validation.constraints.NotNull;
 public class LogTaskRequest extends TaskRequest {
 
     @NotNull(message = "log message is required")
-    String message;
+    private String message;
 }

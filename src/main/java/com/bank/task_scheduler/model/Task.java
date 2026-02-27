@@ -19,8 +19,9 @@ import java.time.LocalDateTime;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tasks_seq")
+    @SequenceGenerator(name = "tasks_seq", sequenceName = "tasks_seq", allocationSize = 1)
+    private Long taskId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

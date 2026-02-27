@@ -27,7 +27,7 @@ public class WorkerTransferExecutor implements TaskExecutor {
     }
 
     @Override
-    public Task createTask(@NonNull TaskRequest request) {
+    public Task buildTask(@NonNull TaskRequest request) {
         WorkerTaskRequest workerRequest = (WorkerTaskRequest) request;
         return Task.builder()
                 .type(request.getTaskType())
@@ -41,7 +41,7 @@ public class WorkerTransferExecutor implements TaskExecutor {
     @Override
     public TaskResponse toResponse(@NonNull Task task) {
         return WorkerTaskResponse.builder()
-                .id(task.getId())
+                .id(task.getTaskId())
                 .workerId(task.getWorkerId())
                 .taskType(task.getType())
                 .taskStatus(task.getStatus())

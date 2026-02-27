@@ -4,6 +4,7 @@ import com.bank.task_scheduler.dto.response.TaskResponse;
 import com.bank.task_scheduler.service.TaskService;
 import com.bank.task_scheduler.dto.request.TaskRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class TaskController {
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest request) {
         TaskResponse createdTask = taskService.createTask(request);
         return ResponseEntity
-                .status(200)
+                .status(HttpStatus.CREATED)
                 .body(createdTask);
     }
 
@@ -29,7 +30,7 @@ public class TaskController {
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
         List<TaskResponse> tasks = taskService.getAllTasks();
         return ResponseEntity
-                .status(200)
+                .status(HttpStatus.OK)
                 .body(tasks);
     }
 
@@ -37,7 +38,7 @@ public class TaskController {
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
         TaskResponse task = taskService.getTaskById(id);
         return ResponseEntity
-                .status(200)
+                .status(HttpStatus.OK)
                 .body(task);
     }
 
@@ -45,7 +46,7 @@ public class TaskController {
     public ResponseEntity<Void> cancelTask(@PathVariable Long id) {
         taskService.cancelTask(id);
         return ResponseEntity
-                .status(200)
+                .status(HttpStatus.NO_CONTENT)
                 .build();
     }
 }

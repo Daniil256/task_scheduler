@@ -26,7 +26,7 @@ public class LogExecutor implements TaskExecutor {
         logService.logNotification(task.getNotificationMessage());
     }
 
-    public Task createTask(@NonNull TaskRequest request) {
+    public Task buildTask(@NonNull TaskRequest request) {
         LogTaskRequest logRequest = (LogTaskRequest) request;
         return Task.builder()
                 .type(request.getTaskType())
@@ -39,7 +39,7 @@ public class LogExecutor implements TaskExecutor {
     @Override
     public TaskResponse toResponse(@NonNull Task task) {
         return LogTaskResponse.builder()
-                .id(task.getId())
+                .id(task.getTaskId())
                 .taskType(task.getType())
                 .taskStatus(task.getStatus())
                 .message(task.getNotificationMessage())

@@ -11,7 +11,7 @@ public interface TaskExecutor {
 
     void execute(Task task);
 
-    Task createTask(TaskRequest request);
+    Task buildTask(TaskRequest request);
 
     TaskResponse toResponse(Task task);
 }

@@ -21,9 +21,9 @@ import java.time.LocalDateTime;
 })
 public abstract class TaskRequest {
     @NotNull(message = "Task type is required")
-    TaskType taskType;
+    private TaskType taskType;
 
     @NotNull(message = "Scheduled time is required")
     @Future(message = "Scheduled time must be in the future")
-    LocalDateTime scheduledTime;
+    private LocalDateTime scheduledTime;
 }

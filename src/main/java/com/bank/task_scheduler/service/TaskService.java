@@ -25,7 +25,7 @@ public class TaskService {
     public TaskResponse createTask(@NonNull TaskRequest request) {
         Task task = executorFactory
                 .getExecutor(request.getTaskType())
-                .createTask(request);
+                .buildTask(request);
         Task saved = taskRepository.save(task);
         return mapToResponse(saved);
     }
@@ -54,7 +54,7 @@ public class TaskService {
         }
     }
 
-    private TaskResponse mapToResponse(Task task) {
+    private TaskResponse mapToResponse(@NonNull Task task) {
         return executorFactory
                 .getExecutor(task.getType())
                 .toResponse(task);

@@ -17,8 +17,8 @@ import javax.validation.constraints.NotNull;
 public class GroupTaskRequest extends TaskRequest {
 
     @NotNull(message = "groupId is required")
-    Long groupId;
+    private Long groupId;
 
     @NotNull(message = "groupStatus is required")
-    GroupStatus groupStatus;
+    private GroupStatus groupStatus;
 }

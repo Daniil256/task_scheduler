@@ -21,14 +21,14 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @With
-    private Long id;
+    private Long groupId;
 
     @Column(nullable = false)
     @NonNull
-    private String name;
+    private String groupName;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NonNull
-    private GroupStatus status;
+    private GroupStatus groupStatus;
 }
